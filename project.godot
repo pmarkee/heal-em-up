@@ -16,7 +16,14 @@ _global_script_class_icons={
 [application]
 
 config/name="heal-em-up"
+run/main_scene="res://scene/Main.tscn"
 config/icon="res://icon.png"
+
+[global]
+
+mipmap=false
+gen_mipmaps=false
+filter=false
 
 [input]
 
