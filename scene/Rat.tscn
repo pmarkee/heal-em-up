@@ -7,9 +7,9 @@
 radius = 13.1883
 height = 37.7459
 
-[node name="Rat" type="KinematicBody2D"]
+[node name="Rat" type="Area2D"]
 collision_layer = 2
-collision_mask = 29
+collision_mask = 24
 script = ExtResource( 2 )
 
 [node name="rat" type="Sprite" parent="."]
@@ -20,3 +20,7 @@ texture = ExtResource( 1 )
 position = Vector2( 0, 2.548 )
 rotation = 1.5708
 shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+[connection signal="area_entered" from="." to="." method="_on_Rat_area_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

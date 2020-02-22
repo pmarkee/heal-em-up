@@ -1,22 +1,19 @@
-extends KinematicBody2D
+extends Area2D
 
 signal shoot
+signal die
 
 var velocity: = Vector2.ZERO
 var can_shoot: = false
+var lives = 5
 
-var weapons = ["heal", "purge"]
 var current_weapon = 0
-
-func change_weapon() -> void:
-    # Basically toggle between Heal and Purge
-    current_weapon = 1 - current_weapon
 
 func _physics_process(delta: float) -> void:
     if Input.is_action_pressed("up"):
-        velocity.y = -300
+        velocity.y = -10
     elif Input.is_action_pressed("down"):
-        velocity.y = 300
+        velocity.y = 10
     else:
         velocity.y = 0
 
@@ -27,9 +24,24 @@ func _physics_process(delta: float) -> void:
         emit_signal("shoot")
         can_shoot = false
 
-    move_and_slide(velocity)
+    position.y = clamp(position.y + velocity.y, 0, 1080)
+
+
+func change_weapon() -> void:
+    # Basically toggle between Heal and Purge
+    current_weapon = 1 - current_weapon
 
 
 func _on_ShootTimer_timeout() -> void:
     can_shoot = true
 
+
+func _on_Player_area_entered(area):
+    if area.is_in_group("rats"):
+        lives -= 1
+    elif area.is_in_group("villagers"):
+        if area.is_sick:
+            lives -= 1
+    
+    if lives == 0:
+        emit_signal("die")

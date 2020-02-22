@@ -1,6 +1,15 @@
-extends KinematicBody2D
+extends Area2D
 
-var velocity = Vector2.RIGHT * 300
+var velocity = Vector2.RIGHT * 20
+
+func _ready():
+    add_to_group("heal")
 
 func _physics_process(delta: float) -> void:
-    move_and_slide(velocity)
+    position += velocity
+
+func _on_Heal_area_entered(area):
+    queue_free()
+
+func _on_VisibilityNotifier2D_screen_exited():
+    queue_free()
