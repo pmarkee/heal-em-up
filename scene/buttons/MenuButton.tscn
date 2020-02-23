@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scene/fonts/pixel_36.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/MenuButton.gd" type="Script" id=2]
+
+[node name="MenuButton" type="Button"]
+margin_right = 12.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 360, 60 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 360, 60 )
+custom_fonts/font = ExtResource( 1 )
+text = "Label"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
