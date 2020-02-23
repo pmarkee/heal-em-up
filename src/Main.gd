@@ -7,7 +7,11 @@ export (PackedScene) var Heal
 export (PackedScene) var Purge
 
 var score = 0
-var mob_spawn_x = 1900
+var vp_size = Vector2(1280, 720)
+var mob_spawn_x = vp_size.x - 20
+
+func _ready():
+    print(vp_size)
 
 func _on_Player_shoot():
     var weapon = Heal if $Player.current_weapon == 1 else Purge
@@ -29,14 +33,14 @@ func _on_RatTimer_timeout():
     randomize()
     var rat = Rat.instance()
     rat.position.x = mob_spawn_x
-    rat.position.y = randi() % 1000 + 10
+    rat.position.y = randi() % 700 + 10
     add_child(rat)
-    $RatTimer.start(randi() % 7 + 3)
+    $RatTimer.start(randi() % 3 + 1)
 
 func _on_VillagerTimer_timeout():
     randomize()
     var villager = Villager.instance()
     villager.position.x = mob_spawn_x
-    villager.position.y = randi() % 1000 + 10
+    villager.position.y = randi() % 700 + 10
     add_child(villager)
-    $VillagerTimer.start(randi() % 7 + 3)
+    $VillagerTimer.start(randi() % 3 + 1)

@@ -17,6 +17,7 @@ shape = SubResource( 1 )
 
 [node name="ShootTimer" type="Timer" parent="."]
 process_mode = 0
+wait_time = 0.5
 autostart = true
 
 [node name="doctor" type="Sprite" parent="."]

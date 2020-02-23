@@ -4,8 +4,8 @@
 [ext_resource path="res://src/Rat.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 13.1883
-height = 37.7459
+radius = 17.5412
+height = 43.452
 
 [node name="Rat" type="Area2D"]
 collision_layer = 2
