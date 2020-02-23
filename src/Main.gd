@@ -1,49 +1,30 @@
-extends Node
+extends Node2D
 
-export (PackedScene) var Rat
-export (PackedScene) var Villager
+const heal_png = "res://assets/heal_large.png"
+const purge_png = "res://assets/purge_large.png"
 
-export (PackedScene) var Heal
-export (PackedScene) var Purge
-
-var vp_size = Vector2(1280, 720)
-var mob_spawn_x = vp_size.x - 20
+onready var player = $GameArea/Player
 
 func _ready():
-    print(vp_size)
+    global.lives = 5
+    global.score = 0
+    update_score_label()
+    update_lives_label()
+    player.connect("change_weapon", self, "_on_Player_change_weapon")
+    player.connect("injure", self, "_on_Player_injure")
 
-func _on_Player_shoot():
-    var weapon = Heal if $Player.current_weapon == 1 else Purge
-    var shot = weapon.instance()
-    shot.position.x = $Player.position.x + 10
-    shot.position.y = $Player.position.y
-    add_child(shot)
+func _on_Player_change_weapon():
+    $HUD/StatBar/CurrentWeapon.texture = load(heal_png if player.current_weapon == 1  else purge_png)
 
-func _on_Villager_die(score_to_give):
-    global.score += score_to_give
-    print(global.score)
+func _on_Player_injure():
+    update_lives_label()
 
-func _on_Player_die():
-    get_tree().change_scene("res://scene/GameOverScreen.tscn")
+func _on_GameArea_score_change():
+    update_score_label()
 
-func _on_Rat_die():
-    global.score += 1
-    print(global.score)
+func update_lives_label():
+    $HUD/StatBar/LivesLabel.text = "Lives: %d" % global.lives
 
-func _on_RatTimer_timeout():
-    randomize()
-    var rat = Rat.instance()
-    rat.position.x = mob_spawn_x
-    rat.position.y = randi() % 700 + 10
-    add_child(rat)
-    rat.connect("die", self, "_on_Rat_die")
-    $RatTimer.start(randi() % 3 + 1)
+func update_score_label():
+    $HUD/StatBar/ScoreLabel.text = "Score: %d" % global.score
 
-func _on_VillagerTimer_timeout():
-    randomize()
-    var villager = Villager.instance()
-    villager.position.x = mob_spawn_x
-    villager.position.y = randi() % 700 + 10
-    add_child(villager)
-    villager.connect("die", self, "_on_Villager_die")
-    $VillagerTimer.start(randi() % 3 + 1)
